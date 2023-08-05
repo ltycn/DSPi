@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSPi", "DSPi.csproj", "{A1000C4F-7824-4CD3-915D-E143EE6A5D94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Debug|x64.ActiveCfg = Debug|x64
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Debug|x64.Build.0 = Debug|x64
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Release|x64.ActiveCfg = Release|x64
+		{A1000C4F-7824-4CD3-915D-E143EE6A5D94}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEE95AF8-3BF2-462F-910A-CCD3444FD382}
+	EndGlobalSection
+EndGlobal
