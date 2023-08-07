@@ -14,6 +14,7 @@ namespace DSPi
         public static void InstallDriver(string infFilePath)
         {
             ExecutePnputilCommand($"/add-driver {infFilePath} /subdirs /install");
+            RestorePowerCfgCommands();
         }
 
         public static void UninstallDriver(string infFileName)
@@ -21,7 +22,7 @@ namespace DSPi
             ExecutePnputilCommand($"/delete-driver {infFileName} /uninstall /force");
         }
 
-        public static string GetDrivernameForDevice(string deviceDescription)
+        public static string CheckDriver(string deviceDescription)
         {
             var output = ExecutePnputilCommand($"/enum-devices /class system");
             string drivername = null;
@@ -50,6 +51,27 @@ namespace DSPi
             }
 
             return drivername;
+        }
+
+        public static void RestorePowerCfgCommands()
+        {
+            try
+            {
+                // 第一个命令：powercfg /setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
+                RunCommand("powercfg", "/setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c");
+
+                // 第二个命令：powercfg -restoredefaultschemes
+                RunCommand("powercfg", "-restoredefaultschemes");
+
+                // 第三个命令：powercfg /setactive 381b4222-f694-41f0-9685-ff5bb260df2e
+                RunCommand("powercfg", "/setactive 381b4222-f694-41f0-9685-ff5bb260df2e");
+
+                Console.WriteLine("Restored PowerConfig.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error：" + ex.Message);
+            }
         }
 
         private static string ExecutePnputilCommand(string arguments)
@@ -84,5 +106,32 @@ namespace DSPi
 
             return output;
         }
+
+        private static void RunCommand(string command, string arguments)
+        {
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/C " + command + " " + arguments,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+
+            if (!string.IsNullOrWhiteSpace(output))
+                Console.WriteLine(output);
+
+            if (!string.IsNullOrWhiteSpace(error))
+                Console.WriteLine(error);
+        }
     }
+
 }
