@@ -5,7 +5,9 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -27,6 +29,23 @@ namespace DSPi
 
             // Set the console buffer width and height
             Console.SetBufferSize(width, height);
+
+
+            bool isTestModeEnabled = TestModeCheck.IsTestModeEnabled();
+            if (!isTestModeEnabled)
+            {
+                Console.WriteLine("Test mode is not enabled. Would you like to enable it? (Y/N)");
+                var ModeCheckRespose = Console.ReadLine()?.ToLower();
+
+                if (ModeCheckRespose == "y" || string.IsNullOrEmpty(ModeCheckRespose))
+                {
+                    TestModeCheck.EnableTestMode();
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
+            }
 
             string drivername = DriverInstaller.GetDrivernameForDevice("Lenovo Process Management");
 
@@ -74,11 +93,21 @@ namespace DSPi
 
         static async Task Run()
         {
+
+            bool isNetworkConnected = await IsNetworkConnected();
+            if (!isNetworkConnected)
+            {
+                Console.WriteLine("Network connection is not available.");
+                Thread.Sleep(5000);
+                return;
+            }
+
             var releases = await GetReleasesAsync("https://git.lnvpe.com/api/v1/repos/tianyi/LNVProcessManagement/releases");
 
             if (releases.Count == 0)
             {
                 Console.WriteLine("No releases found.");
+                Thread.Sleep(5000);
                 return;
             }
 
@@ -98,7 +127,24 @@ namespace DSPi
                 }
             }
         }
-
+        public static async Task<bool> IsNetworkConnected()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Head, "https://git.lnvpe.com"))
+                    {
+                        var response = await client.SendAsync(request);
+                        return response.IsSuccessStatusCode;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         static async Task<List<Release>> GetReleasesAsync(string url)
         {
             var response = await client.GetAsync(url);
@@ -109,9 +155,6 @@ namespace DSPi
 
         static int ShowReleases(List<Release> releases)
         {
-
-
-
 
             int selectedReleaseIndex = 0;
             while (true)
