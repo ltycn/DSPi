@@ -119,19 +119,21 @@ namespace DSPi
             if (!isTestModeEnabled)
             {
                 Console.WriteLine(TestModePrompt);
-                char response = Console.ReadKey().KeyChar;
-                if (response == 'y' || response == 'Y')
+                ConsoleKeyInfo response = Console.ReadKey();
+                if (response.KeyChar == 'y' || response.KeyChar == 'Y' || response.Key == ConsoleKey.Enter)
                 {
+                    Console.WriteLine("");
                     TestModeCheck.EnableTestMode();
                     Console.WriteLine("Restart to apply changes, Confirm? ");
-                    char needrestart = Console.ReadKey().KeyChar;
-                    if (needrestart == 'y' || needrestart == 'Y')
+                    ConsoleKeyInfo needrestartrespose = Console.ReadKey();
+                    if (needrestartrespose.KeyChar == 'y' || needrestartrespose.KeyChar == 'Y' || needrestartrespose.Key == ConsoleKey.Enter)
                     {
                         Console.WriteLine("Restarting...");
                         Process.Start("shutdown", "/r /t 0");
                     }
                     else
                     {
+                        Console.WriteLine("");
                         Console.WriteLine("TestMode Only become effective after reboot!");
                         Thread.Sleep(3000);
                         Environment.Exit(0);
@@ -140,6 +142,8 @@ namespace DSPi
                 else
                 {
                     Console.WriteLine("");
+                    Console.WriteLine("In non-test mode usage, it may lead to issues which the driver cannot be installed.");
+                    Thread.Sleep(3000);
                     //Environment.Exit(0);
                 }
             }
