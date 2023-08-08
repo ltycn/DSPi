@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Resources;
 using System.Threading.Tasks;
 
 namespace DSPi
@@ -28,16 +29,24 @@ namespace DSPi
                 return false;
             }
         }
+
+        private const string AccessToken = token.accesstoken;
+
         public static async Task<List<Repository>> GetRepositoriesAsync(string apiUrl)
         {
-            var response = await client.GetAsync(apiUrl);
+            var apiUrlWithToken = $"{apiUrl}?access_token={AccessToken}";
+
+            var response = await client.GetAsync(apiUrlWithToken);
             response.EnsureSuccessStatusCode();
             var RepositoriesJson = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Repository>>(RepositoriesJson);
         }
+
         public static async Task<List<Release>> GetReleasesAsync(string releasesurl)
         {
-            var response = await client.GetAsync(releasesurl);
+            var releasesurlWithToken = $"{releasesurl}?access_token={AccessToken}";
+
+            var response = await client.GetAsync(releasesurlWithToken);
             response.EnsureSuccessStatusCode();
             var releasesJson = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<Release>>(releasesJson);

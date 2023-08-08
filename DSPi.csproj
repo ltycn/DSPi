@@ -90,7 +90,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>liutianyi.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -267,6 +268,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="token.cs" />
     <Compile Include="FileOperator.cs" />
     <Compile Include="HttpGet.cs" />
     <Compile Include="ShowSelect.cs" />
@@ -278,8 +280,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
-    <None Include="DSPi_TemporaryKey.pfx" />
-    <None Include="liutianyi.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

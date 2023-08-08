@@ -143,6 +143,7 @@ namespace DSPi
                 }
                 else
                 {
+                    Console.WriteLine("");
                     //Environment.Exit(0);
                 }
             }
