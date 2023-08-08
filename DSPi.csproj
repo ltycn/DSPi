@@ -268,6 +268,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleFontManager.cs" />
     <Compile Include="token.cs" />
     <Compile Include="FileOperator.cs" />
     <Compile Include="HttpGet.cs" />
