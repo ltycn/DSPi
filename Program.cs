@@ -22,7 +22,7 @@ namespace DSPi
             Console.Title = "Dispatcher Installer 1.0";
 
             int width = 100; // Set the desired width
-            int height = 30; // Set the desired height
+            int height = 40; // Set the desired height
             Console.SetWindowSize(width, height);
             Console.SetBufferSize(width, height);
 

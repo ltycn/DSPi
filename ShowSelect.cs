@@ -39,10 +39,13 @@ Dispatcher Installer 1.0.0                     github.com/ltycn/DSPi
                 Console.ResetColor();
                 for (int i = 0; i < releases.Count; i++)
                 {
+                    if (i == selectedReleaseIndex)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
                     var release = releases[i];
                     var highlight = (i == selectedReleaseIndex) ? " >> " : "    ";
-                    Console.BackgroundColor = ConsoleColor.Blue;
-                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine($"{highlight}{release.name} (Tag: {release.tag_name})");
                     Console.ResetColor();
                 }
