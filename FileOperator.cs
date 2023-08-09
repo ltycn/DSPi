@@ -10,7 +10,6 @@ namespace DSPi
     public class FileOperator
     {
         static readonly string downloadPath = @"C:\DSP_Files\";
-
         public static async Task DownloadAndExtractReleaseAsync(Release release)
         {
             try
@@ -34,7 +33,7 @@ namespace DSPi
 
                     // Extract the downloaded release file
                     string extractPath = Path.Combine(downloadPath, "Extracted");
-                    ExtractZipArchive(filePath, extractPath);
+                    await ExtractZipArchiveAsync(filePath, extractPath); // Await the async extraction
                     Console.WriteLine($"Release extracted to: {extractPath}");
                 }
             }
@@ -44,7 +43,7 @@ namespace DSPi
             }
         }
 
-        public static void ExtractZipArchive(string sourceArchiveFileName, string destinationDirectoryName)
+        public static async Task ExtractZipArchiveAsync(string sourceArchiveFileName, string destinationDirectoryName)
         {
             using (var archive = new ZipArchive(File.OpenRead(sourceArchiveFileName), ZipArchiveMode.Read))
             {
@@ -59,12 +58,13 @@ namespace DSPi
                     {
                         using (var fileStream = new FileStream(targetPath, FileMode.Create))
                         {
-                            entry.Open().CopyTo(fileStream);
+                            await entry.Open().CopyToAsync(fileStream); // Await the async file copy
                         }
                     }
                 }
             }
         }
+
 
         public static string SearchForFile()
         {

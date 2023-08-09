@@ -57,6 +57,7 @@ namespace DSPi
                     Console.WriteLine("Driver uninstallation canceled by the user.");
                     Environment.Exit(0);
                 }
+                return;
             }
             else
             {

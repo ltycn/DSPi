@@ -14,12 +14,14 @@ namespace DSPi
         public static void InstallDriver(string infFilePath)
         {
             ExecutePnputilCommand($"/add-driver {infFilePath} /subdirs /install");
+            return;
         }
 
         public static void UninstallDriver(string infFileName)
         {
             ExecutePnputilCommand($"/delete-driver {infFileName} /uninstall /force");
             RestorePowerCfgCommands();
+            return;
         }
 
         public static string CheckDriver(string deviceDescription)
