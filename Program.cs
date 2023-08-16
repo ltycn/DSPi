@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using static DSPi.HttpGet;
@@ -9,15 +12,8 @@ namespace DSPi
     class Program
     {
         private const string BaseUrl = "https://git.lnvpe.com/api/v1";
-        private const string TestModePrompt = "Test mode is not enabled. Would you like to enable it? (Y/N)";
-        private const string UninstallPrompt = "Do you want to uninstall Dispatcher? (y/n)";
-        private const string RestartPrompt = "A restart required, now restart? (y/n)";
-        private const string NetworkUnavailable = "Network connection is not available.";
-        private const string NoRepositoriesFound = "No repositories found.";
-        private const string NoReleasesFound = "No releases found.";
-        private const string DriverInstalled = "Driver installed successfully. Press any key to exit...";
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.Title = "Dispatcher Installer 1.0";
 
@@ -26,22 +22,72 @@ namespace DSPi
             Console.SetWindowSize(width, height);
             Console.SetBufferSize(width, height);
 
-            Run().Wait();
+            if (args.Length > 0 && args[0] == "update")
+            {
+                RunUpdate();
+            }
+            else
+            {
+                await Run();
+            }
         }
 
+        static void RunUpdate()
+        {
+            string cmdFilePath = @"C:\DSPi\UpdateDSPi.cmd"; // 指定要创建的CMD文件路径
+            update updateExecutor = new update();
+
+            updateExecutor.RunUpdate(cmdFilePath); // 设置CMD文件路径
+            updateExecutor.CreateAndExecuteCmdFile(); // 创建并执行CMD文件
+
+            Console.WriteLine("Update script has generated, plese <double click> <UpdataDSPi.cmd> to update this program!");
+
+            string ScriptPath = @"C:\DSP_Files\UpdateDSPi.cmd";
+            Process.Start("explorer.exe", "/select," + ScriptPath);
+
+            Thread.Sleep(6000);
+            Environment.Exit(0);
+        }
         static async Task Run()
         {
-            await CheckAndEnableTestMode();
+            bool isTestModeEnabled = TestModeCheck.IsTestModeEnabled();
+            if (!isTestModeEnabled)
+            {
+                if (PromptYesNo("Test mode is not enabled. Would you like to enable it? (Y/N)"))
+                {
+                    Console.WriteLine("");
+                    TestModeCheck.EnableTestMode();
+                    if (PromptYesNo("Restart to apply changes, Confirm? "))
+                    {
+                        Console.WriteLine("Restarting...");
+                        Process.Start("shutdown", "/r /t 0");
+                    }
+                    else
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("TestMode Only become effective after reboot!");
+                        Thread.Sleep(3000);
+                        Environment.Exit(0);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("In non-test mode usage, it may lead to issues which the driver cannot be installed.");
+                    Thread.Sleep(3000);
+                    //Environment.Exit(0);
+                }
+            }
 
             string driverName = DriverInstaller.CheckDriver("Lenovo Process Management");
             if (!string.IsNullOrEmpty(driverName))
             {
                 Console.WriteLine("You've already installed Dispatcher, continue using this tool should uninstall Dispatcher first!");
-                if (PromptYesNo(UninstallPrompt))
+                if (PromptYesNo("Do you want to uninstall Dispatcher? (y/n)"))
                 {
                     DriverInstaller.UninstallDriver(driverName);
                     Console.WriteLine("Driver uninstalled successfully.");
-                    if (PromptYesNo(RestartPrompt))
+                    if (PromptYesNo("A restart required, now restart? (y/n)"))
                     {
                         Console.WriteLine("Restarting...");
                         Process.Start("shutdown", "/r /t 0");
@@ -67,7 +113,7 @@ namespace DSPi
             bool isNetworkConnected = await IsNetworkConnected();
             if (!isNetworkConnected)
             {
-                Console.WriteLine(NetworkUnavailable);
+                Console.WriteLine("Network connection is not available.");
                 Thread.Sleep(3000);
                 return;
             }
@@ -75,7 +121,7 @@ namespace DSPi
             var repositories = await GetRepositoriesAsync($"{BaseUrl}/users/tianyi/repos");
             if (repositories.Count == 0)
             {
-                Console.WriteLine(NoRepositoriesFound);
+                Console.WriteLine("No repositories found.");
                 return;
             }
 
@@ -100,7 +146,7 @@ namespace DSPi
 
             if (releases.Count == 0)
             {
-                Console.WriteLine(NoReleasesFound);
+                Console.WriteLine("No releases found.");
                 Thread.Sleep(3000);
                 return;
             }
@@ -109,46 +155,11 @@ namespace DSPi
             if (selectedReleaseIndex != -1)
             {
                 await DownloadAndInstallDriver(releases[selectedReleaseIndex]);
-                Console.WriteLine(DriverInstalled);
+                Console.WriteLine("Driver installed successfully. Press any key to exit...");
                 Console.ReadLine();
             }
         }
 
-        static async Task CheckAndEnableTestMode()
-        {
-            bool isTestModeEnabled = TestModeCheck.IsTestModeEnabled();
-            if (!isTestModeEnabled)
-            {
-                Console.WriteLine(TestModePrompt);
-                ConsoleKeyInfo response = Console.ReadKey();
-                if (response.KeyChar == 'y' || response.KeyChar == 'Y' || response.Key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine("");
-                    TestModeCheck.EnableTestMode();
-                    Console.WriteLine("Restart to apply changes, Confirm? ");
-                    ConsoleKeyInfo needrestartrespose = Console.ReadKey();
-                    if (needrestartrespose.KeyChar == 'y' || needrestartrespose.KeyChar == 'Y' || needrestartrespose.Key == ConsoleKey.Enter)
-                    {
-                        Console.WriteLine("Restarting...");
-                        Process.Start("shutdown", "/r /t 0");
-                    }
-                    else
-                    {
-                        Console.WriteLine("");
-                        Console.WriteLine("TestMode Only become effective after reboot!");
-                        Thread.Sleep(3000);
-                        Environment.Exit(0);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("");
-                    Console.WriteLine("In non-test mode usage, it may lead to issues which the driver cannot be installed.");
-                    Thread.Sleep(3000);
-                    //Environment.Exit(0);
-                }
-            }
-        }
 
         static bool PromptYesNo(string prompt)
         {
@@ -159,8 +170,8 @@ namespace DSPi
 
         static async Task DownloadAndInstallDriver(Release release)
         {
-            await FileOperator.DownloadAndExtractReleaseAsync(release);
-            string infFilePath = FileOperator.SearchForFile();
+            string downloadedFileName = await FileOperator.DownloadAndExtractReleaseAsync(release);
+            string infFilePath = FileOperator.SearchForFile(downloadedFileName);
 
             if (!string.IsNullOrEmpty(infFilePath))
             {
