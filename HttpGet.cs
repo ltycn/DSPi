@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Resources;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DSPi
@@ -11,23 +13,25 @@ namespace DSPi
     {
         private static HttpClient client = new HttpClient();
 
-        public static async Task<bool> IsNetworkConnected()
+        public static bool IsNetworkConnected()
         {
             try
             {
-                using (var client = new HttpClient())
+                // 尝试ping一个可靠的远程服务器，比如谷歌
+                Ping ping = new Ping();
+                PingReply reply = ping.Send("git.lnvpe.com");
+
+                if (reply.Status == IPStatus.Success)
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Head, "https://git.lnvpe.com"))
-                    {
-                        var response = await client.SendAsync(request);
-                        return response.IsSuccessStatusCode;
-                    }
+                    return true; // 成功收到ping响应，说明有网络连接
                 }
             }
             catch (Exception)
             {
-                return false;
+                // 发生异常，说明网络连接失败
             }
+
+            return false;
         }
 
         private const string AccessToken = token.accesstoken;

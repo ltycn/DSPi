@@ -20,7 +20,6 @@ namespace DSPi
         public static void UninstallDriver(string infFileName)
         {
             ExecutePnputilCommand($"/delete-driver {infFileName} /uninstall /force");
-            RestorePowerCfgCommands();
             return;
         }
 
@@ -69,6 +68,25 @@ namespace DSPi
                 RunCommand("powercfg", "/setactive 381b4222-f694-41f0-9685-ff5bb260df2e");
 
                 Console.WriteLine("Restored PowerConfig.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error：" + ex.Message);
+            }
+        }
+
+        public static void NeversleepCommands()
+        {
+            try
+            {
+                RunCommand("powercfg", "/change monitor-timeout-ac 0");
+                RunCommand("powercfg", "/change monitor-timeout-dc 0");
+
+                RunCommand("powercfg", "/change standby-timeout-ac 0");
+                RunCommand("powercfg", "/change standby-timeout-dc 0");
+
+                RunCommand("powercfg", "/change hibernate-timeout-ac 0");
+                RunCommand("powercfg", "/change hibernate-timeout-dc 0");
             }
             catch (Exception ex)
             {
