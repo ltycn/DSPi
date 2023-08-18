@@ -38,7 +38,7 @@ namespace DSPi
                 writer.WriteLine("set DownloadedFilePath=%DesktopPath%\\DSPi.exe");
                 writer.WriteLine("echo This script will perform the following tasks:");
                 writer.WriteLine("echo 1. Download the file from \"%DownloadURL%\"");
-                writer.WriteLine("echo 2. Replace the existing file if necessary");
+                writer.WriteLine("echo 2. Replace the existing file in DESKTOP");
                 writer.WriteLine("echo 3. Run the downloaded file");
                 writer.WriteLine("echo.");
                 writer.WriteLine("pause");

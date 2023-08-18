@@ -320,8 +320,8 @@
   <Import Project="packages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
   <Import Project="packages\Fody.6.8.0\build\Fody.targets" Condition="Exists('packages\Fody.6.8.0\build\Fody.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe" sign /f "C:\Users\tianyi\Documents\Certificate\Certificate.cer" /p “tian8149” /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "C:\Users\tianyi\source\repos\DSPi\bin\x64\Release\DSPi.exe"
-copy /y "C:\Users\tianyi\source\repos\DSPi\bin\x64\Release\DSPi.exe" "C:\Users\tianyi\Documents\GitHub\lnvpe-tool\logtool\DSPi.exe"
-copy /y "C:\Users\tianyi\source\repos\DSPi\bin\x64\Release\DSPi.exe" "C:\Users\tianyi\Documents\GitHub\lnvpe-tool\Release\DSPi\x64\DSPi.exe"</PostBuildEvent>
+    <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\App Certification Kit\signtool.exe" sign /f "C:\Users\tianyi\Documents\Certificate\Certificate.cer" /p “tian8149” /tr http://timestamp.digicert.com /td SHA256 /fd SHA256 "C:\Users\tianyi\source\repos\DSPi\src\bin\x64\Release\DSPi.exe"
+copy /y "C:\Users\tianyi\source\repos\DSPi\src\bin\x64\Release\DSPi.exe" "C:\Users\tianyi\Documents\GitHub\lnvpe-tool\logtool\DSPi.exe"
+copy /y "C:\Users\tianyi\source\repos\DSPi\src\bin\x64\Release\DSPi.exe" "C:\Users\tianyi\Documents\GitHub\lnvpe-tool\Release\DSPi\x64\DSPi.exe"</PostBuildEvent>
   </PropertyGroup>
 </Project>

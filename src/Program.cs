@@ -36,8 +36,7 @@ namespace DSPi
 
             Console.WriteLine("Update script has generated, plese <double click> <UpdataDSPi.cmd> to update this program!");
 
-            string ScriptPath = @"C:\DSP_Files\UpdateDSPi.cmd";
-            Process.Start("explorer.exe", "/select," + ScriptPath);
+            Process.Start("explorer.exe", "/select," + cmdFilePath);
 
             Thread.Sleep(6000);
             Environment.Exit(0);
