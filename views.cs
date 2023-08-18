@@ -67,8 +67,8 @@ namespace DSPi
                 label.Text="Uninstalling...Please wait......";
                 Application.Refresh();
 
-                //DriverInstaller.UninstallDriver(driverName);
-                //DriverInstaller.RestorePowerCfgCommands();
+                DriverInstaller.UninstallDriver(driverName);
+                DriverInstaller.RestorePowerCfgCommands();
                 Thread.Sleep(500);
 
                 label.Text = "Uninstall success!";
