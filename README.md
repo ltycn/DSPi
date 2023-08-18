@@ -17,7 +17,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 ### 如何开始
 
-#### 安装
+#### ==安装==
 
 本项目全部开源，Release地址为https://github.com/ltycn/DSPi/releases
 
@@ -25,7 +25,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 注意：仅建议安装在测试使用的计算机中。
 
-#### 启动
+#### ==启动==
 
 1. 直接双击运行桌面的DSPi.exe文件，同意管理员权限请求。
 
