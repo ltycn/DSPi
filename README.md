@@ -15,9 +15,9 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 - **[电源配置]** 由于Dispatcher对电源配置做了修改，在进行卸载操作时，会对电源模式进行重置处理。在进行安装操作时，会自动设置自动熄屏和自动睡眠时间为永不。
 - **[操作简捷]** 所有操作仅涉及方向键和回车键，傻瓜操作，解放双手。
 
-### 如何开始
+# 如何开始
 
-#### ==安装==
+- ## 安装
 
 本项目全部开源，Release地址为https://github.com/ltycn/DSPi/releases
 
@@ -25,7 +25,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 注意：仅建议安装在测试使用的计算机中。
 
-#### ==启动==
+- ## 启动
 
 1. 直接双击运行桌面的DSPi.exe文件，同意管理员权限请求。
 
@@ -49,7 +49,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 7. 核对好这些信息，确定这个版本是自己需要的版本后，使用回车键进行安装。
 8. 退出。
 
-### 如何更新
+# 如何更新
 
 - 你可以直接在Github的Release Page中查找最新版本并下载。
 
@@ -72,13 +72,13 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
   4. 本地更新完成
 
-### 支持&反馈
+# 支持&反馈
 
 - 使用过程发现BUG请直接联系ITCode：**liuty24**
 - 如果有功能需求，可以在Github中提issue
 - Email：liuty24@lenovo.com
 
-### 最后
+# 最后
 
 感谢你的使用，希望这个小工具能够帮助到你。
 
@@ -88,6 +88,6 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 
 
-刘天义 2023 / 08 / 18
+刘天义
 
 Platform Enablement
