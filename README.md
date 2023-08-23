@@ -19,7 +19,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 - ## 安装
 
-本项目全部开源，Release地址为https://github.com/ltycn/DSPi/releases
+项目开源于Github，Repository地址为https://github.com/ltycn/DSPi
 
 下载最新版本Release中的DSPi_v1.x.zip文件，并将zip中的DSPi.exe解压至桌面。
 
@@ -47,7 +47,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
       4. **URL**：附件下载地址
       5. **Size**：附件大小（KB）
 7. 核对好这些信息，确定这个版本是自己需要的版本后，使用回车键进行安装。
-8. 退出。
+8. 安装完毕，回车键退出。
 
 # 如何更新
 
@@ -75,7 +75,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 # 支持&反馈
 
 - 使用过程发现BUG请直接联系ITCode：**liuty24**
-- 如果有功能需求，可以在Github中提issue
+- 如果有功能需求，可以在Github中提issue，提pull request
 - Email：liuty24@lenovo.com
 
 # 最后
@@ -88,7 +88,7 @@ DSPi是Dispatcher Installer的简写，它是一款自动化驱动安装管理�
 
 
 
-刘天义
+Author: 刘天义
 
 Platform Enablement
 
