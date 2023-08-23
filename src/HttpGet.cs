@@ -17,20 +17,15 @@ namespace DSPi
         {
             try
             {
-                // 尝试ping一个可靠的远程服务器，比如谷歌
                 Ping ping = new Ping();
                 PingReply reply = ping.Send("git.lnvpe.com");
 
                 if (reply.Status == IPStatus.Success)
                 {
-                    return true; // 成功收到ping响应，说明有网络连接
+                    return true;
                 }
             }
-            catch (Exception)
-            {
-                // 发生异常，说明网络连接失败
-            }
-
+            
             return false;
         }
 
