@@ -126,7 +126,7 @@ namespace DSPi
                 DriverInstaller.NeversleepCommands();
                 Console.WriteLine("Driver installed successfully!");
                 Console.WriteLine("System will reboot to make sure register is correctly flashed!");
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
                 Process.Start("shutdown", "/r /t 0");
                 Environment.Exit(0);
             }
