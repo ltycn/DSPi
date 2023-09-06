@@ -124,8 +124,11 @@ namespace DSPi
             {
                 await DownloadAndInstallDriver(releases[selectedReleaseIndex]);
                 DriverInstaller.NeversleepCommands();
-                Console.WriteLine("Driver installed successfully. Press any key to exit...");
-                Console.ReadLine();
+                Console.WriteLine("Driver installed successfully!");
+                Console.WriteLine("System will reboot to make sure register is correctly flashed!");
+                Thread.Sleep(1000);
+                Process.Start("shutdown", "/r /t 0");
+                Environment.Exit(0);
             }
         }
         static async Task DownloadAndInstallDriver(Release release)

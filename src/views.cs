@@ -69,12 +69,12 @@ namespace DSPi
 
                 DriverInstaller.UninstallDriver(driverName);
                 DriverInstaller.RestorePowerCfgCommands();
-                Thread.Sleep(500);
+                Thread.Sleep(300);
 
                 label.Text = "Uninstall success!";
                 Application.Refresh();
 
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
 
                 tcs.SetResult(true); // Set the result to true when the uninstall button is clicked
 

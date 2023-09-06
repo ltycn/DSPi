@@ -17,16 +17,18 @@ namespace DSPi
         {
             try
             {
-                Ping ping = new Ping();
-                PingReply reply = ping.Send("git.lnvpe.com");
-
-                if (reply.Status == IPStatus.Success)
+                using (Ping ping = new Ping())
                 {
-                    return true;
+                    PingReply reply = ping.Send("git.lnvpe.com");
+
+                    return reply.Status == IPStatus.Success;
                 }
             }
-            
-            return false;
+            catch (PingException)
+            {
+                // 处理Ping异常，例如网络不可达
+                return false;
+            }
         }
 
         private const string AccessToken = token.accesstoken;
